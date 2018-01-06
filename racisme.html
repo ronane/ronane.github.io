@@ -4,11 +4,12 @@
 <meta charset="UTF-8">
 <title>Racisme</title>
 <style>
-body { background-color : black ; }
+body { background-color : white ; }
 
-p { color : white; } 
-
-
+p { 
+    color : #F45B0E;    
+    font-weight: bold;
+} 
 
 #container {
     width: 100%;
@@ -47,29 +48,27 @@ p#bingoParagraph {
 }
 
 div#bingoArray {
-    width: 800px;
+    width: 750px;
     display: flex;
+    border: solid black 1px;
     
     flex-flow: row wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: stretch;
 }
 
 div#bingoArray > p {
-    width: 140px;
-    height: 140px;
+    width: 138px;
+    height: 138px;
     padding: 5px;
-    margin: 4px;
-    border: solid red 1px;
-    background-color: white;
-    color : black;
+    border: solid black 1px;
+    margin: 0;
     
     display: flex;
     flex-flow: column;
     justify-content: center;
     align-items: center;
-    
-    font-weight: bold;
+
     text-align: center;
     cursor: pointer;
 }
