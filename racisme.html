@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Racisme</title>
+<style>
+body { background-color : black ; }
+
+p { color : white; } 
+
+
+
+#container {
+    width: 100%;
+    height: 100%;
+    display : flex;
+    flex-flow: row
+}
+
+#rightPane {
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+}
+
+
+div#buttons {
+    display: flex;
+    width: 100%;
+    margin: auto;
+    justify-content: space-around;
+}
+
+#div#buttons button {
+    flex: 1;
+}
+
+p#bingoParagraph { 
+    padding : 10px;
+    text-align: center;
+    flex: 1;
+    
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+div#bingoArray {
+    width: 800px;
+    display: flex;
+    
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: stretch;
+}
+
+div#bingoArray > p {
+    width: 140px;
+    height: 140px;
+    padding: 5px;
+    margin: 4px;
+    border: solid red 1px;
+    background-color: white;
+    color : black;
+    
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+}
+
+.highlight {
+    background-color: gold !important;
+    color: black !important;
+    transition-duration: 1s;
+}
+
+</style>
+<script type="text/javascript">
+
+var _bingoList = [ 
+    "on ne peut plus rien dire",
+    "on est tous humains",
+    "blanc, noir, rose, vert, bleu, etc...",
+    "mon partenaire est de [X] origine",
+    "[référence aux Nazis]",
+    "ce disours dessert la cause",
+    "c'est pas comme ça qu'on va changer les choses",
+    "je suis universaliste",
+    "parler de races c'est diversif",
+    "[mauvaise citation de Marthin Luther King]",
+    "parler de racisme c'est raciste",
+    "il faut arrêter de se victimiser",
+    "je ne trouve pas ça raciste",
+    "blanc, noir, il faut arrêter de mettre les gens dans des cases",
+    "c'est du passé",
+    "j'ai un-e ami-e [noir-e/arabe/asiatique]",
+    "il faut arrêter de voir le mal partout",
+    "c'est du racisme anti-blancs",
+    "quand j'étais en vacances on m'a traité-e de sale blanc-he",
+    "j'adore le couscous",
+    "le racisme, ça marche dans les deux sens",
+    "il faut arrêter de crier au racisme tout le temps",
+    "on est pas aux US ou en Affrique du Sud",
+    "mes grands-parents sont de telle ou telle origine",
+    "je ne vais pas m'excuser d'être blanc"
+];
+    
+var linkList = [
+    ",",
+    ";",
+    "et", 
+    "mais",
+    "pourtant", 
+    "celà-dit", 
+    "mais il faut souligner que", 
+    "malgré ça",
+    "donc",
+    "en conséquence",
+    "en extrapolant",
+    "si je peux me permettre,",
+    "car",
+    "et peut-être que",
+    "si"
+];
+
+var init = function() {
+    var bingoArray = document.getElementById("bingoArray");
+    
+    _bingoList.forEach(function(item, index, array) {
+        p = document.createElement("p");
+        p.id = 'part_' + index;
+        text = document.createTextNode(item);
+        p.appendChild(text);
+        p.addEventListener("click", function(event) { 
+            var bingo = event.target.id.replace("part_",'');
+            appendContent(bingo);
+            
+        });
+        bingoArray.appendChild(p);
+    });
+}
+
+var fullbingo = function() {
+    var bingoArray = document.getElementById('bingoArray').children;
+    var elemList = new Array();
+    for (var i = 0; i < bingoArray.length; i++) {
+        var child = bingoArray.item(i);
+        if (child.className !== 'highlight') {
+            elemList.push(child);
+        }
+    }
+    
+    while (elemList.length > 0) {
+        var nBingo = Math.floor(Math.random() * elemList.length);
+        var child = elemList.splice(nBingo,1)[0];
+        var n = child.id.replace("part_","");
+        appendContent(n);
+    }
+}
+
+var reset = function() {
+    var bingoParagraph = document.getElementById("bingoParagraph");
+    bingoParagraph.innerText = '';
+    
+    var bingoArray = document.getElementById('bingoArray').children;
+    for (var i = 0; i < bingoArray.length; i++) {
+        var child = bingoArray.item(i);
+        child.className = '';
+    }
+}
+
+var appendContent = function(nBingo) {
+    var p = document.getElementById("part_" + nBingo);
+    if (p.className !== 'highlight') {
+        p.className = 'highlight';
+        var bingo = p.innerText;
+        
+        var bingoLink;
+        
+        if (bingoParagraph.innerText !== '') {
+            nBingo = Math.floor(Math.random() * linkList.length);
+            bingoLink = linkList[nBingo];
+        }
+        
+        if (bingoLink != null) {
+            bingoParagraph.innerText += ' ' + bingoLink;
+        }
+        
+        bingoParagraph.innerText +=  ' ' + bingo;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function(event) { init(); });
+
+</script>
+
+</head>
+<body>
+<div id="container">
+    <div id="bingoArray"></div>
+
+    <div id="rightPane">
+        <div id="buttons">
+            <button onclick="fullbingo()">Full Bingo!</button>
+            <button onclick="reset()">Reset</button>
+        </div>
+        <p id="bingoParagraph"></p>
+    </div>
+</div>
+</body>
+</html>
