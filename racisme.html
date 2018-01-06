@@ -48,7 +48,7 @@ p#bingoParagraph {
 }
 
 div#bingoArray {
-    width: 750px;
+    max-width: 750px;
     display: flex;
     border: solid black 1px;
     
@@ -143,14 +143,16 @@ var init = function() {
         });
         bingoArray.appendChild(p);
     });
-}
+};
 
-var fullbingo = function() {
+var bingo = function(number) {
     var bingoArray = document.getElementById('bingoArray').children;
     var elemList = new Array();
-    for (var i = 0; i < bingoArray.length; i++) {
-        var child = bingoArray.item(i);
-        if (child.className !== 'highlight') {
+    while (elemList.length < number) {
+        var x = Math.floor(Math.random() * bingoArray.length);
+    
+        var child = bingoArray.item(x);
+        if (elemList.indexOf(child) == -1) {
             elemList.push(child);
         }
     }
@@ -161,7 +163,12 @@ var fullbingo = function() {
         var n = child.id.replace("part_","");
         appendContent(n);
     }
-}
+};
+
+var fullbingo = function() {
+    var bingoArray = document.getElementById('bingoArray').children;
+    bingo(bingoArray.length);
+};
 
 var reset = function() {
     var bingoParagraph = document.getElementById("bingoParagraph");
@@ -172,7 +179,7 @@ var reset = function() {
         var child = bingoArray.item(i);
         child.className = '';
     }
-}
+};
 
 var appendContent = function(nBingo) {
     var p = document.getElementById("part_" + nBingo);
@@ -193,7 +200,7 @@ var appendContent = function(nBingo) {
         
         bingoParagraph.innerText +=  ' ' + bingo;
     }
-}
+};
 
 document.addEventListener("DOMContentLoaded", function(event) { init(); });
 
@@ -206,6 +213,7 @@ document.addEventListener("DOMContentLoaded", function(event) { init(); });
 
     <div id="rightPane">
         <div id="buttons">
+            <button onclick="bingo(5)">Bingo 5!</button>
             <button onclick="fullbingo()">Full Bingo!</button>
             <button onclick="reset()">Reset</button>
         </div>
